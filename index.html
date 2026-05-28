@@ -2353,10 +2353,7 @@ body::after{
             Объясните, откуда пошло выражение "Пау, пау дома? Нет, пау пау бургер". Развёрнутый ответ. Чем больше вы расскажите историю этого выражения, тем больше баллов вы получите за этот вопрос (до 4 баллов)
         </div>
 
-        <textarea
-            class="long-answer"
-            placeholder="Введите ваш ответ...">
-        </textarea>
+        <textarea class="long-answer" placeholder="Введите ваш ответ..."></textarea>
 
         <div class="navigation">
 
@@ -2430,10 +2427,7 @@ body::after{
             Значение названия канала Андерson. Развёрнутый ответ. Чем больше вы расскажите про значение этого названия, тем больше баллов вы получите за этот вопрос (до 3 баллов)
         </div>
 
-        <textarea
-            class="long-answer"
-            placeholder="Введите ваш ответ...">
-        </textarea>
+        <textarea class="long-answer" placeholder="Введите ваш ответ..."></textarea>
 
         <div class="navigation">
 
@@ -2523,10 +2517,7 @@ body::after{
             Перечислите всех участников Autizm gang. Только его официальные участники (золотой состав)
         </div>
 
-        <textarea
-            class="long-answer"
-            placeholder="Введите ваш ответ...">
-        </textarea>
+        <textarea class="long-answer" placeholder="Введите ваш ответ..."></textarea>
 
         <div class="navigation">
 
@@ -2560,10 +2551,7 @@ body::after{
             Продолжите "WW3 - ..."
         </div>
 
-        <textarea
-            class="long-answer"
-            placeholder="Введите ваш ответ...">
-        </textarea>
+        <textarea class="long-answer" placeholder="Введите ваш ответ..."></textarea>
 
         <div class="navigation">
 
@@ -2597,10 +2585,7 @@ body::after{
             Объясните, что такое "чернослив". Какие ещё сухофрукты имеют особое значение? Развёрнутый ответ. Чем больше вы расскажите, тем больше баллов вы получите за этот вопрос (до 4 баллов)
         </div>
 
-        <textarea
-            class="long-answer"
-            placeholder="Введите ваш ответ...">
-        </textarea>
+        <textarea class="long-answer" placeholder="Введите ваш ответ..."></textarea>
 
         <div class="navigation">
 
@@ -2783,60 +2768,92 @@ function startTest(){
    ВПЕРЁД
 ========================= */
 
+
 function nextPage(pageNumber, answered = false){
 
-const currentPage =
-    document.querySelector('.page.active');
+    const currentPage =
+        document.querySelector('.page.active');
 
-if(currentPage){
+    if(currentPage){
 
-    const currentMatch =
-        currentPage.id.match(/\d+/);
+        const currentMatch =
+            currentPage.id.match(/\d+/);
 
-    if(currentMatch){
+        if(currentMatch){
 
-        const currentQuestion =
-            Number(currentMatch[0]);
+            const currentQuestion =
+                Number(currentMatch[0]);
 
-        if(answered){
+            /* =========================
+               ЕСЛИ ВЫБРАН ОТВЕТ
+            ========================= */
 
-            let answerText = '';
+            if(answered){
 
-            if(window.event && window.event.target){
+                let answerText = '';
 
-                answerText =
-                    window.event.target.innerText.trim();
-            }
+                if(window.event && window.event.target){
 
-            answers[currentQuestion - 1] =
-                answerText;
-
-            answeredQuestions.add(currentQuestion);
-
-            skippedQuestions.delete(currentQuestion);
-        }
-
-        else{
-
-            const textarea =
-                currentPage.querySelector('textarea');
-
-            if(textarea){
+                    answerText =
+                        window.event.target.innerText.trim();
+                }
 
                 answers[currentQuestion - 1] =
-                    textarea.value;
+                    answerText;
+
+                answeredQuestions.add(currentQuestion);
+
+                skippedQuestions.delete(currentQuestion);
             }
 
-            if(!answeredQuestions.has(currentQuestion)){
+            /* =========================
+               ЕСЛИ ПЕРЕХОД БЕЗ КНОПКИ ОТВЕТА
+            ========================= */
 
-                skippedQuestions.add(currentQuestion);
+            else{
+
+                const textarea =
+                    currentPage.querySelector('textarea');
+
+                /* TEXTAREA ВОПРОС */
+
+                if(textarea){
+
+                    const text =
+                        textarea.value.trim();
+
+                    answers[currentQuestion - 1] =
+                        text;
+
+                    if(text.length > 0){
+
+                        answeredQuestions.add(currentQuestion);
+
+                        skippedQuestions.delete(currentQuestion);
+                    }
+
+                    else{
+
+                        answeredQuestions.delete(currentQuestion);
+
+                        skippedQuestions.add(currentQuestion);
+                    }
+                }
+
+                /* ОБЫЧНЫЙ ВОПРОС */
+
+                else{
+
+                    if(!answeredQuestions.has(currentQuestion)){
+
+                        skippedQuestions.add(currentQuestion);
+                    }
+                }
             }
         }
     }
-}
 
-showPage(`page-${pageNumber}`);
-
+    showPage(`page-${pageNumber}`);
 }
 
 /* =========================
