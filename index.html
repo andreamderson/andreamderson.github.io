@@ -474,6 +474,11 @@ body::before{
 
     filter:blur(8px);
 
+    html,
+    body{
+        overflow-x:hidden;
+    }
+
     transform:scale(1.05);
 
     z-index:-2;
@@ -839,9 +844,12 @@ body::after{
     transition:0.2s;
 }
 
-.heart-button:hover{
+@media (hover:hover){
 
-    transform:scale(1.12);
+    button:hover{
+        transform:scale(1.12);
+        background:#2a2a2a;
+    }
 }
 
 #hearts-container{
@@ -2653,8 +2661,6 @@ body::after{
 
 <script>
 
-localStorage.removeItem('anderson-test-finished');
-
 /* =========================
    ФИНАЛ
 ========================= */
@@ -2666,30 +2672,6 @@ function finishTest(){
     document.querySelector('.progress-counter')
         .style.display = 'none';
 
-}
-
-function startTest(){
-
-    const username =
-        document.getElementById('username').value;
-
-    if(username.trim() === ''){
-
-        openNamePopup();
-
-        return;
-    }
-
-    /* ПРОВЕРКА: ПРОЙДЕН ЛИ ТЕСТ */
-
-    if(localStorage.getItem('anderson-test-finished')){
-
-        openAlreadyPopup();
-
-        return;
-    }
-
-    showPage('page-1');
 }
 
 /* =========================
@@ -2732,6 +2714,26 @@ function finishTestConfirmed(){
         'anderson-test-finished',
         'true'
     );
+    const username =
+        document.getElementById('username').value;
+
+    fetch('https://script.google.com/macros/s/AKfycbymRUcl8u18F8vE3fff4E67g7OI_jP1HILcpsweAfPVRLh9WJEZwdlt2A8KSrL6TU0rYg/exec', {
+            
+        method:'POST',
+
+        headers:{
+            'Content-Type':'application/json'
+        },
+
+        body:JSON.stringify({
+
+            username,
+
+            answers
+
+        })
+
+    });
 
     finishTest();
 
@@ -2762,17 +2764,12 @@ function openNamePopup(){
         .play();
 }
 
-function closeNamePopup(){
-
-    document.getElementById('name-popup')
-        .style.display = 'none';
-}
-
 /* =========================
    ДАННЫЕ
 ========================= */
 
 const totalQuestions = 24;
+let answers = [];
 
 let answeredQuestions = new Set();
 
@@ -2810,36 +2807,58 @@ function startTest(){
 
 function nextPage(pageNumber, answered = false){
 
-    const currentPage =
-        document.querySelector('.page.active');
+const currentPage =
+    document.querySelector('.page.active');
 
-    if(currentPage){
+if(currentPage){
 
-        const currentMatch =
-            currentPage.id.match(/\d+/);
+    const currentMatch =
+        currentPage.id.match(/\d+/);
 
-        if(currentMatch){
+    if(currentMatch){
 
-            const currentQuestion =
-                currentMatch[0];
+        const currentQuestion =
+            Number(currentMatch[0]);
 
-            if(answered){
+        if(answered){
 
-                answeredQuestions.add(currentQuestion);
+            let answerText = '';
 
-                skippedQuestions.delete(currentQuestion);
+            if(window.event && window.event.target){
+
+                answerText =
+                    window.event.target.innerText.trim();
             }
-            else{
 
-                if(!answeredQuestions.has(currentQuestion)){
+            answers[currentQuestion - 1] =
+                answerText;
 
-                    skippedQuestions.add(currentQuestion);
-                }
+            answeredQuestions.add(currentQuestion);
+
+            skippedQuestions.delete(currentQuestion);
+        }
+
+        else{
+
+            const textarea =
+                currentPage.querySelector('textarea');
+
+            if(textarea){
+
+                answers[currentQuestion - 1] =
+                    textarea.value;
+            }
+
+            if(!answeredQuestions.has(currentQuestion)){
+
+                skippedQuestions.add(currentQuestion);
             }
         }
     }
+}
 
-    showPage(`page-${pageNumber}`);
+showPage(`page-${pageNumber}`);
+
 }
 
 /* =========================
@@ -3098,57 +3117,6 @@ updateCounter(0);
             <div class="xp-text">
 
                 Тест уже пройден.<br><br>
-                Если возникли вопросы,
-                обратитесь к организатору.
-
-            </div>
-
-        </div>
-
-        <div class="xp-buttons">
-
-            <button
-                class="xp-ok"
-                onclick="closeAlreadyPopup()">
-
-                OK
-
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-<div class="xp-popup" id="already-popup">
-
-    <div class="xp-window">
-
-        <div class="xp-titlebar">
-
-            <span>Windows Error</span>
-
-            <button
-                class="xp-close"
-                onclick="closeAlreadyPopup()">
-                ×
-            </button>
-
-        </div>
-
-        <div class="xp-content">
-
-            <img
-                src="fotki/question24.png"
-                class="xp-icon">
-
-            <div class="xp-text">
-
-                Тест уже пройден.<br><br>
-
-                (Enter)<br><br>
-
                 Если возникли вопросы,
                 обратитесь к организатору.
 
