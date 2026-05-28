@@ -1,34 +1,35 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Название теста</title>
+<title>Тест на знание Андерsonа</title>
 
 <style>
 
 /* =========================
-   МЕСТО ДЛЯ ТВОИХ ШРИФТОВ
+   ШРИФТЫ
 ========================= */
-
 
 @font-face {
     font-family: 'CHAOS';
-    src: url('saitik/shriftu/CHAOS16.otf');
+    src: url('shriftu/CHAOS16.otf') format('opentype');
 }
 
-
-:root{
-    --bg-color: #111;
-    --text-color: white;
-    --button-color: #222;
-    --button-hover: #333;
-    --input-color: #1a1a1a;
+@font-face {
+    font-family: 'Sreda';
+    src: url('shriftu/Sreda.otf') format('opentype');
 }
 
-/* =========================
-   ОСНОВА
-========================= */
+input,
+button,
+textarea,
+.question,
+.answers,
+.name-text{
+
+    font-family:'Sreda';
+}
 
 *{
     margin:0;
@@ -36,24 +37,14 @@
     box-sizing:border-box;
 }
 
+/* =========================
+   ОСНОВА
+========================= */
+
 body{
-    background: var(--bg-color);
-
-    /* МЕСТО ДЛЯ ТВОЕГО ФОНА */
-    /*
-    background-image: url("background.png");
-    background-size: cover;
-    background-position: center;
-    */
-
-    color: var(--text-color);
-
-    /* МЕСТО ДЛЯ ТВОЕГО ШРИФТА */
-    /*
-    font-family: 'MyFont';
-    */
-
-    font-family: Arial, sans-serif;
+    background:#050505;
+    color:white;
+    font-family:'Sreda';
 
     min-height:100vh;
 
@@ -70,8 +61,7 @@ body{
 
 .container{
     width:100%;
-    max-width:700px;
-
+    max-width:900px;
     text-align:center;
 }
 
@@ -88,12 +78,71 @@ body{
 }
 
 /* =========================
-   ЗАГОЛОВОК
+   НАЗВАНИЕ
 ========================= */
 
 .title{
-    font-size:40px;
-    margin-bottom:50px;
+
+    /* ШРИФТ CHAOS ТОЛЬКО ДЛЯ НАЗВАНИЯ */
+    font-family:'CHAOS';
+
+    font-size:70px;
+
+    margin-bottom:80px;
+
+    letter-spacing:3px;
+}
+
+/* =========================
+   введите имя
+========================= */
+
+.name-text{
+
+    color:#666;
+    font-size:20px;
+    margin-bottom:10px;
+    text-align:left;
+}
+
+/* =========================
+   ТЕКСТ ВОПРОСОВ
+========================= */
+
+.question{
+    font-size:32px;
+    margin-bottom:30px;
+}
+
+.question-number{
+
+    font-family:'Sreda';
+
+    font-size:130px;
+
+    opacity:0.25;
+
+    line-height:1;
+
+    margin-bottom:20px;
+
+    user-select:none;
+}
+
+/* =========================
+   БЛОК ИМЕНИ
+========================= */
+
+.name-block{
+
+    width:100%;
+
+    display:flex;
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    margin-bottom:40px;
 }
 
 /* =========================
@@ -103,22 +152,23 @@ body{
 input,
 textarea{
     width:100%;
-    padding:15px;
 
-    background:var(--input-color);
+    padding:20px;
+
+    background:#111;
 
     border:none;
     outline:none;
 
     color:white;
 
-    margin-top:20px;
+    font-size:20px;
 
-    font-size:18px;
+    transition:0.2s;
 }
 
 textarea{
-    min-height:150px;
+    min-height:200px;
     resize:vertical;
 }
 
@@ -127,44 +177,89 @@ textarea{
 ========================= */
 
 button{
-    margin-top:30px;
-
-    padding:15px 30px;
+    padding:18px 40px;
 
     border:none;
 
-    background:var(--button-color);
+    background:#1a1a1a;
 
     color:white;
 
     cursor:pointer;
 
-    font-size:18px;
+    font-size:20px;
 
-    transition:0.2s;
+    transition:0.25s;
+
+    transform:scale(1);
 }
 
+/* УВЕЛИЧЕНИЕ ПРИ НАВЕДЕНИИ */
+
 button:hover{
-    background:var(--button-hover);
+    transform:scale(1.12);
+    background:#2a2a2a;
 }
 
 /* =========================
-   ВОПРОСЫ
+   ОТВЕТЫ
 ========================= */
-
-.question{
-    font-size:30px;
-    margin-bottom:30px;
-}
 
 .answers{
     display:flex;
     flex-direction:column;
-    gap:15px;
+    gap:20px;
+
+    margin-bottom:50px;
 }
 
-.answer-btn{
-    width:100%;
+/* =========================
+   КНОПКИ НАЗАД/ВПЕРЁД
+========================= */
+
+/* НАВИГАЦИЯ */
+
+.navigation{
+
+    position:fixed;
+
+    bottom:35px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:70px;
+
+    z-index:999;
+}
+
+.nav-btn{
+
+    background:none;
+
+    border:none;
+
+    color:white;
+
+    font-size:32px;
+
+    opacity:0.5;
+
+    transition:0.2s;
+}
+
+.nav-btn:hover{
+
+    opacity:1;
+
+    transform:scale(1.2);
 }
 
 /* =========================
@@ -173,12 +268,12 @@ button:hover{
 
 .question-image{
     width:100%;
-    max-height:400px;
+
+    max-height:500px;
+
     object-fit:cover;
 
-    margin-bottom:25px;
-
-    border-radius:10px;
+    margin-bottom:30px;
 }
 
 /* =========================
@@ -187,14 +282,965 @@ button:hover{
 
 .question-video{
     width:100%;
-    height:400px;
+    height:450px;
 
-    margin-bottom:25px;
+    margin-bottom:30px;
+}
+
+/* =========================
+   ВНУТРЕННИЙ LAYOUT ВОПРОСА
+========================= */
+
+.question-layout{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:70px;
+
+    width:100%;
+
+    position:relative;
+}
+
+/* НОМЕР ВОПРОСА */
+
+.question-number{
+
+    font-family:'Sreda';
+
+    font-size:140px;
+
+    opacity:0.12;
+
+    line-height:1;
+
+    margin-bottom:20px;
+
+    user-select:none;
+}
+
+/* ЛЕВАЯ ЧАСТЬ */
+
+.question-side{
+
+    flex:1.2;
+
+    text-align:left;
+}
+
+/* ПРАВАЯ ЧАСТЬ */
+
+.image-side{
+
+    flex:1;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+}
+
+/* КАРТИНКА */
+
+.side-image{
+
+    width:493px;
+
+    max-width:100%;
+
+    border-radius:14px;
+
+    object-fit:cover;
+
+    box-shadow:0 0 30px rgba(0,0,0,0.35);
+}
+
+/* =========================
+   MEDIA QUESTION LAYOUT
+========================= */
+
+.question-layout{
+
+    width:100%;
+
+    position:relative;
+
+    padding-top:130px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:80px;
+}
+
+/* НОМЕР ВОПРОСА */
+
+#page-6 .question-number{
+
+    position:absolute;
+
+    top:-10px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    margin-bottom:0;
+
+    text-align:center;
+}
+
+#page-13 .question-number{
+
+    position:absolute;
+
+    top:-10px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    margin-bottom:0;
+
+    text-align:center;
+}
+
+/* ЛЕВАЯ ЧАСТЬ */
+
+.question-side{
+
+    flex:1.2;
+
+    text-align:left;
+}
+
+/* ПРАВАЯ ЧАСТЬ */
+
+.image-side{
+
+    flex:1;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+}
+
+/* КАРТИНКА / ВИДЕО */
+
+.side-image,
+.side-video{
+
+    width:700px;
+
+    max-width:100%;
+
+    border-radius:16px;
+
+    object-fit:cover;
+
+    box-shadow:0 0 35px rgba(0,0,0,0.35);
+}
+
+/* =========================
+   GIF ФОН
+========================= */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    background:url('fotki/glow.gif');
+
+    background-size:cover;
+    background-position:center;
+
+    filter:blur(8px);
+
+    transform:scale(1.05);
+
+    z-index:-2;
+}
+
+/* ТЁМНОЕ ЗАТЕМНЕНИЕ */
+
+body::after{
+
+    content:"";
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    background:rgba(0,0,0,0.55);
+
+    z-index:-1;
+}
+
+/* =========================
+   РАЗВЁРНУТЫЙ ОТВЕТ
+========================= */
+.long-answer{
+
+    width:100%;
+
+    max-width:800px;
+
+    height:220px;
+
+    padding:25px;
+
+    border:none;
+
+    outline:none;
+
+    resize:none;
+
+    border-radius:16px;
+
+    background:rgba(255,255,255,0.08);
+
+    color:white;
+
+    font-size:18px;
+
+    font-family:'Sreda';
+
+    box-sizing:border-box;
+
+    line-height:1.5;
+
+    text-indent:0;
+
+    margin:0;
+
+}
+
+.long-answer::placeholder{
+
+    color:rgba(255,255,255,0.4);
+}
+
+/* =========================
+   СЧЁТЧИК ВОПРОСОВ
+========================= */
+
+.progress-counter{
+
+    position:fixed;
+
+    top:30px;
+    left:40px;
+
+    z-index:9999;
+
+    font-size:22px;
+
+    opacity:0.5;
+
+    user-select:none;
+
+    pointer-events:none;
+}
+
+.missed-counter{
+
+    margin-top:6px;
+
+    font-size:16px;
+
+    color:#ff4d4d;
+
+    opacity:0;
+
+    transition:0.3s;
+}
+
+/* =========================
+   ТАЙМЕР
+========================= */
+
+.timer{
+
+    position:fixed;
+
+    top:30px;
+    right:40px;
+
+    z-index:9999;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    font-size:22px;
+
+    opacity:0.5;
+
+    user-select:none;
+
+    font-variant-numeric:tabular-nums;
+
+    min-width:260px;
+
+    justify-content:flex-end;
+}
+
+#hours,
+#minutes,
+#seconds,
+#milliseconds{
+
+    display:inline-block;
+
+    text-align:center;
+}
+
+#hours{
+
+    width:42px;
+}
+
+#minutes,
+#seconds{
+
+    width:30px;
+}
+
+#milliseconds{
+
+    width:42px;
+}
+
+.separator{
+
+    opacity:0.5;
+}
+
+.time-over{
+
+    width:100vw;
+    height:100vh;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    color:white;
+
+    font-size:80px;
+
+    letter-spacing:10px;
+}
+
+/* =========================
+   XP POPUP
+========================= */
+
+.xp-popup{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,0.45);
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    z-index:999999;
+}
+
+.xp-window{
+
+    width:420px;
+
+    background:#ece9d8;
+
+    border:3px solid #0054e3;
+
+    box-shadow:0 0 40px rgba(0,0,0,0.5);
+
+    font-family:Tahoma, sans-serif;
+
+    color:black;
+}
+
+.xp-titlebar{
+
+    height:32px;
+
+    background:linear-gradient(
+        to bottom,
+        #2b7cff,
+        #0055e5
+    );
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 8px;
+
+    color:white;
+
+    font-size:15px;
+
+    font-weight:bold;
+}
+
+.xp-close{
+
+    width:24px;
+    height:24px;
+
+    background:#e35d4f;
+
+    border:1px solid white;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+    padding:0;
+}
+
+.xp-content{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:18px;
+
+    padding:28px 24px 10px;
+}
+
+.xp-icon{
+
+    width:42px;
+    height:42px;
+}
+
+.xp-text{
+    text-align:left;
+    font-size:20px;
+    line-height:1.4;
+    padding-top:2px;
+}
+
+.xp-buttons{
+
+    display:flex;
+
+    justify-content:center;
+
+    padding:10px 0 24px;
+}
+
+.xp-ok{
+
+    min-width:90px;
+
+    padding:6px 18px;
+
+    font-size:16px;
+
+    background:#ece9d8;
+
+    border:2px solid #808080;
+
+    color:black;
+
+    cursor:pointer;
+}
+
+.final-page .name-text{
+
+    margin-top:20px;
+
+    font-size:22px;
+
+    color:white;
+
+    text-align:center;
+
+    line-height:1.45;
+
+    opacity:0.92;
+}
+
+/* =========================
+   HEART BUTTON
+========================= */
+
+.heart-button{
+
+    color:#ff3b5c;
+
+    user-select:none;
+    -webkit-user-select:none;
+
+    position:fixed;
+
+    right:35px;
+    bottom:30px;
+
+    width:70px;
+    height:70px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(10px);
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    font-size:34px;
+
+    cursor:pointer;
+
+    z-index:9999;
+
+    transition:0.2s;
+}
+
+.heart-button:hover{
+
+    transform:scale(1.12);
+}
+
+#hearts-container{
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    overflow:hidden;
+
+    z-index:9998;
+}
+
+.floating-heart{
+
+    color:#ff3b5c;
+
+    text-shadow:
+        0 0 10px rgba(255,59,92,0.7),
+        0 0 20px rgba(255,59,92,0.4);
+
+    user-select:none;
+    -webkit-user-select:none;
+
+    position:fixed;
+
+    right:55px;
+    bottom:60px;
+
+    font-size:28px;
+
+    animation:floatHeart 1.8s linear forwards;
+
+    opacity:1;
+}
+
+@keyframes floatHeart{
+
+    0%{
+
+        transform:
+            translate(0,0)
+            scale(0.7);
+
+        opacity:1;
+    }
+
+    100%{
+
+        transform:
+            translate(
+                calc((var(--x) - 0.5) * 220px),
+                calc(-200px - var(--y) * 180px)
+            )
+            scale(1.4);
+
+        opacity:0;
+    }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px){
+
+    *{
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    body{
+
+        padding:12px;
+
+        align-items:flex-start;
+
+        min-height:auto;
+    }
+
+    .container{
+
+        width:100%;
+
+        max-width:100%;
+    }
+
+    .page{
+
+        min-height:100vh;
+
+        padding-top:90px;
+
+        padding-bottom:130px;
+    }
+
+    /* TITLE */
+
+    .title{
+
+        font-size:34px;
+
+        line-height:1.15;
+
+        margin-bottom:38px;
+
+        letter-spacing:1px;
+    }
+
+    /* QUESTION NUMBER */
+
+    .question-number{
+
+        font-size:110px !important;
+
+        opacity:0.08;
+
+        margin-bottom:14px;
+    }
+
+    /* QUESTION */
+
+    .question{
+
+        font-size:18px;
+
+        line-height:1.25;
+
+        margin-bottom:22px;
+    }
+
+    /* ANSWERS */
+
+    .answers{
+
+        gap:12px;
+
+        margin-bottom:28px;
+    }
+
+    button{
+
+        width:100%;
+
+        min-height:62px;
+
+        padding:14px 12px;
+
+        font-size:16px;
+
+        line-height:1.2;
+    }
+
+    /* INPUT */
+
+    input,
+    textarea{
+
+        font-size:16px;
+
+        padding:16px;
+    }
+
+    .long-answer{
+
+        height:170px;
+
+        font-size:16px;
+    }
+
+    /* LAYOUT */
+
+    .question-layout{
+
+        flex-direction:column;
+
+        gap:22px;
+
+        padding-top:0;
+    }
+
+    .question-side{
+
+        width:100%;
+
+        text-align:left;
+    }
+
+    .image-side{
+
+        width:100%;
+    }
+
+    /* IMAGE */
+
+    .side-image,
+    .side-video{
+
+        width:100%;
+
+        max-width:100%;
+
+        border-radius:12px;
+    }
+
+    /* QUESTION 6/13 NUMBER */
+
+    #page-6 .question-number,
+    #page-13 .question-number{
+
+        position:static;
+
+        transform:none;
+
+        text-align:left;
+    }
+
+    /* NAVIGATION */
+
+    .navigation{
+
+        width:100%;
+
+        bottom:24px;
+
+        gap:65px;
+    }
+
+    .nav-btn{
+
+        width:auto;
+
+        min-height:auto;
+
+        font-size:34px;
+
+        padding:0;
+
+        opacity:0.75;
+    }
+
+    /* TIMER */
+
+    .timer{
+
+        top:16px;
+        right:14px;
+
+        font-size:13px;
+
+        min-width:auto;
+
+        gap:3px;
+    }
+
+    #hours{
+
+        width:auto !important;
+    }
+
+    #minutes,
+    #seconds,
+    #milliseconds{
+
+        width:auto !important;
+    }
+
+    /* COUNTER */
+
+    .progress-counter{
+
+        top:16px;
+        left:14px;
+
+        font-size:14px;
+    }
+
+    .missed-counter{
+
+        font-size:11px;
+    }
+
+    /* FINAL PAGE */
+
+    .final-page .name-text{
+
+        font-size:16px;
+
+        line-height:1.45;
+    }
+
+    /* HEART */
+
+    .heart-button{
+
+        width:62px;
+        height:62px;
+
+        right:16px;
+        bottom:18px;
+
+        font-size:30px;
+    }
+
+    .floating-heart{
+
+        right:28px;
+
+        bottom:45px;
+    }
+
+    /* XP POPUP */
+
+    .xp-window{
+
+        width:92%;
+    }
+
+    .xp-content{
+
+        padding:20px 16px 10px;
+
+        gap:12px;
+    }
+
+    .xp-text{
+
+        font-size:15px;
+
+        line-height:1.35;
+    }
+
+    .xp-titlebar{
+
+        font-size:12px;
+    }
+
+    .xp-ok{
+
+        width:90px !important;
+
+        min-width:90px;
+
+        padding:4px 0 !important;
+
+        font-size:15px !important;
+    }
+
+    .xp-close{
+
+        min-width:unset !important;
+
+        padding:0 !important;
+
+        line-height:1;
+
+        display:flex;
+        align-items:center;
+        justify-content:center;
+    }
+
 }
 
 </style>
 </head>
 <body>
+
+<div class="progress-counter">
+
+    <span id="answered-count">0</span>/24
+
+    <div
+        class="missed-counter"
+        id="missed-counter">
+
+        пропущено: 0
+
+    </div>
+
+</div>
+
+<div class="timer">
+
+    <span id="hours">100</span>
+
+    <span class="separator">:</span>
+
+    <span id="minutes">00</span>
+
+    <span class="separator">:</span>
+
+    <span id="seconds">00</span>
+
+    <span class="separator">:</span>
+
+    <span id="milliseconds">000</span>
+
+</div>
 
 <div class="container">
 
@@ -205,18 +1251,22 @@ button:hover{
     <div class="page active" id="page-register">
 
         <div class="title">
-            НАЗВАНИЕ ТЕСТА
+            Тест на знание Андерсона
         </div>
 
-        <div class="question">
-            Введите своё имя
-        </div>
+        <div class="name-block">
 
-        <input
-            type="text"
-            id="username"
-            placeholder="Ваше имя"
-        >
+            <div class="name-text">
+                введите свое имя
+            </div>
+
+            <input
+                type="text"
+                id="username"
+                placeholder="Ваше имя"
+            >
+
+        </div>
 
         <button onclick="startTest()">
             Начать
@@ -230,26 +1280,50 @@ button:hover{
 
     <div class="page" id="page-1">
 
+        <div class="question-number">
+            01
+        </div>
+
         <div class="question">
-            Ваш первый вопрос?
+            Синоним к словам "бегом" и "быстро" 
         </div>
 
         <div class="answers">
 
-            <button class="answer-btn" onclick="nextPage(2)">
-                Вариант 1
+            <button onclick="nextPage(2, true)">
+                медвежонком
             </button>
 
-            <button class="answer-btn" onclick="nextPage(2)">
-                Вариант 2
+            <button onclick="nextPage(2, true)">
+                раком
             </button>
 
-            <button class="answer-btn" onclick="nextPage(2)">
-                Вариант 3
+            <button onclick="nextPage(2, true)">
+                шлюхой
             </button>
 
-            <button class="answer-btn" onclick="nextPage(2)">
-                Вариант 4
+            <button onclick="nextPage(2, true)">
+                кабанчиком
+            </button>
+
+            <button onclick="nextPage(2, true)">
+                дроном
+            </button>
+
+        </div>
+
+        <div class="navigation">
+
+            <button
+                class="nav-btn"
+                onclick="backPage('page-register')">
+                >
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="nextPage(2)">
+                <
             </button>
 
         </div>
@@ -257,35 +1331,65 @@ button:hover{
     </div>
 
     <!-- =========================
-         ВОПРОС С КАРТИНКОЙ
+        ВОПРОС 2
     ========================== -->
 
     <div class="page" id="page-2">
 
-        <!-- МЕСТО ДЛЯ КАРТИНКИ -->
-        <!--
-        <img
-            src="images/test.jpg"
-            class="question-image"
-        >
-        -->
+        <div class="question-number">
+            02
+        </div>
+
+        <!-- ТЕКСТ ВОПРОСА -->
 
         <div class="question">
-            Вопрос с картинкой
+            Продолжите: "Бушидо Джон Гарик ..."
         </div>
+
+        <!-- ВАРИАНТЫ ОТВЕТА -->
 
         <div class="answers">
 
-            <button class="answer-btn" onclick="nextPage(3)">
-                Ответ 1
+            <button onclick="nextPage(3, true)">
+                Уголёк
             </button>
 
-            <button class="answer-btn" onclick="nextPage(3)">
-                Ответ 2
+            <button onclick="nextPage(3, true)">
+                Харламов
             </button>
 
-            <button class="answer-btn" onclick="nextPage(3)">
-                Ответ 3
+            <button onclick="nextPage(3, true)">
+                Мартиросян
+            </button>
+
+            <button onclick="nextPage(3, true)">
+                Бульдог
+            </button>
+
+            <button onclick="nextPage(3, true)">
+                Кальян
+            </button>
+
+        </div>
+
+        <!-- КНОПКИ НАВИГАЦИИ -->
+
+        <div class="navigation">
+
+            <!-- НАЗАД -->
+
+            <button
+                class="nav-btn"
+                onclick="backPage('page-1')">
+                >
+            </button>
+
+            <!-- ВПЕРЁД -->
+
+            <button
+                class="nav-btn"
+                onclick="nextPage(3)">
+                <
             </button>
 
         </div>
@@ -293,33 +1397,60 @@ button:hover{
     </div>
 
     <!-- =========================
-         ВОПРОС С ВИДЕО
+        ВОПРОС 3
     ========================== -->
+        <div class="page" id="page-3">
 
-    <div class="page" id="page-3">
+        <div class="question-number">
+            03
+        </div>
 
-        <!-- МЕСТО ДЛЯ ВИДЕО -->
-        <!--
-        <iframe
-            class="question-video"
-            src="https://www.youtube.com/embed/VIDEO_ID"
-            frameborder="0"
-            allowfullscreen>
-        </iframe>
-        -->
+        <!-- ТЕКСТ ВОПРОСА -->
 
         <div class="question">
-            Вопрос с видео
+            Продолжите: "парень ..." (именно та фраза, которая послужила прородителем других)
         </div>
+
+        <!-- ВАРИАНТЫ ОТВЕТА -->
 
         <div class="answers">
 
-            <button class="answer-btn" onclick="nextPage(4)">
-                Да
+            <button onclick="nextPage(4, true)">
+                моей прабабушки
             </button>
 
-            <button class="answer-btn" onclick="nextPage(4)">
-                Нет
+            <button onclick="nextPage(4, true)">
+                моего брата
+            </button>
+
+            <button onclick="nextPage(4, true)">
+                моей девушки
+            </button>
+
+            <button onclick="nextPage(4, true)">
+                Андрея Петрова
+            </button>
+
+        </div>
+
+        <!-- КНОПКИ НАВИГАЦИИ -->
+
+        <div class="navigation">
+
+            <!-- НАЗАД -->
+
+            <button
+                class="nav-btn"
+                onclick="backPage('page-2')">
+                >
+            </button>
+
+            <!-- ВПЕРЁД -->
+
+            <button
+                class="nav-btn"
+                onclick="nextPage(4)">
+                <
             </button>
 
         </div>
@@ -327,57 +1458,1168 @@ button:hover{
     </div>
 
     <!-- =========================
-         РАЗВЁРНУТЫЙ ОТВЕТ
+        ВОПРОС 4
     ========================== -->
 
     <div class="page" id="page-4">
 
+        <div class="question-number">
+            04
+        </div>
+
         <div class="question">
-            Напишите свой ответ
+            Самая популярная вацапная вещь, видео с которой длится 10 часов
+        </div>
+
+        <div class="answers">
+
+            <button onclick="nextPage(5, true)">
+                Машина
+            </button>
+
+            <button onclick="nextPage(5, true)">
+                Вайбер
+            </button>
+
+            <button onclick="nextPage(5, true)">
+                Марк Цукерберг
+            </button>
+
+            <button onclick="nextPage(5, true)">
+                Собака
+            </button>
+
+            <button onclick="nextPage(5, true)">
+                Верблюд
+            </button>
+
+            <button onclick="nextPage(5, true)">
+                Бутылка
+            </button>
+
+        </div>
+
+        <div class="navigation">
+
+            <button
+                class="nav-btn"
+                onclick="backPage('page-3')">
+                >
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="nextPage(5)">
+                <
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+        ВОПРОС 5
+    ========================== -->
+
+    <div class="page" id="page-5">
+
+        <div class="question-number">
+            05
+        </div>
+
+        <div class="question">
+            Продолжите панч: "Я строю маленькие панчи, я типо ..."
+        </div>
+
+        <div class="answers">
+
+            <button onclick="nextPage(6, true)">
+                Строитель Боб
+            </button>
+
+            <button onclick="nextPage(6, true)">
+                Путин
+            </button>
+
+            <button onclick="nextPage(6, true)">
+                Эль-Панчо
+            </button>
+
+            <button onclick="nextPage(6, true)">
+                Спанч Боб
+            </button>
+
+        </div>
+
+        <div class="navigation">
+
+            <button
+                class="nav-btn"
+                onclick="backPage('page-4')">
+                >
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="nextPage(6)">
+                <
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+        ВОПРОС 6
+    ========================= -->
+
+    <div class="page" id="page-6">
+
+        <div class="question-layout">
+
+            <!-- ЛЕВАЯ ЧАСТЬ -->
+
+            <div class="question-side">
+
+                <div class="question-number">
+                    06
+                </div>
+
+                <div class="question">
+                    Продолжите фразу на картинке "На ..."
+                </div>
+
+                <div class="answers">
+
+                    <button onclick="nextPage(7, true)">
+                        фронт
+                    </button>
+
+                    <button onclick="nextPage(7, true)">
+                        немцев
+                    </button>
+
+                    <button onclick="nextPage(7, true)">
+                        хуй
+                    </button>
+
+                    <button onclick="nextPage(7, true)">
+                        Берлин
+                    </button>
+
+                    <button onclick="nextPage(7, true)">
+                        Вашингтон
+                    </button>
+
+                    <button onclick="nextPage(7, true)">
+                        войну
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- ПРАВАЯ ЧАСТЬ -->
+
+            <div class="image-side">
+
+                <img
+                    src="fotki/question6.png"
+                    class="side-image">
+
+            </div>
+
+        </div>
+
+        <!-- НАВИГАЦИЯ ВНЕ question-side -->
+
+        <div class="navigation">
+
+            <button
+                class="nav-btn"
+                onclick="backPage('page-5')">
+                >
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="nextPage(7)">
+                &lt;
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+        ВОПРОС 7
+    ========================== -->
+
+    <div class="page" id="page-7">
+
+        <div class="question-number">
+            07
+        </div>
+
+        <div class="question">
+            Лучшая марка машины
+        </div>
+
+        <div class="answers">
+
+            <button onclick="nextPage(8, true)">
+                БМВ
+            </button>
+
+            <button onclick="nextPage(8, true)">
+                Лада
+            </button>
+
+            <button onclick="nextPage(8, true)">
+                Мерседес
+            </button>
+
+            <button onclick="nextPage(8, true)">
+                Хавал
+            </button>
+
+        </div>
+
+        <div class="navigation">
+
+            <button
+                class="nav-btn"
+                onclick="backPage('page-6')">
+                >
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="nextPage(8)">
+                <
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+        ВОПРОС 8
+    ========================== -->
+
+    <div class="page" id="page-8">
+
+        <div class="question-number">
+            08
+        </div>
+
+        <div class="question">
+            КФС?
+        </div>
+
+        <div class="answers">
+
+            <button onclick="nextPage(9, true)">
+                Кифа
+            </button>
+
+            <button onclick="nextPage(9, true)">
+                Киевси
+            </button>
+
+            <button onclick="nextPage(9, true)">
+                Кифиси
+            </button>
+
+            <button onclick="nextPage(9, true)">
+                Кирилл Федот Серафим
+            </button>
+
+        </div>
+
+        <div class="navigation">
+
+            <button
+                class="nav-btn"
+                onclick="backPage('page-7')">
+                >
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="nextPage(9)">
+                <
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+        ВОПРОС 9
+    ========================== -->
+
+    <div class="page" id="page-9">
+
+        <div class="question-number">
+            09
+        </div>
+
+        <div class="question">
+            Кого или что копирует бабушка?
+        </div>
+
+        <div class="answers">
+
+            <button onclick="nextPage(10, true)">
+                гроб
+            </button>
+
+            <button onclick="nextPage(10, true)">
+                троллфейс
+            </button>
+
+            <button onclick="nextPage(10, true)">
+                проститутку
+            </button>
+
+            <button onclick="nextPage(10, true)">
+                еду
+            </button>
+
+        </div>
+
+        <div class="navigation">
+
+            <button
+                class="nav-btn"
+                onclick="backPage('page-8')">
+                >
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="nextPage(10)">
+                <
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+        ВОПРОС 10
+    ========================== -->
+
+    <div class="page" id="page-10">
+
+        <div class="question-number">
+            10
+        </div>
+
+        <div class="question">
+            Продолжите: "Кожа бледная, яндекс музыка синяя, глаза красные, кажется, я ставлюсь ..."
+        </div>
+
+        <div class="answers">
+
+            <button onclick="nextPage(11, true)">
+                ватником
+            </button>
+
+            <button onclick="nextPage(11, true)">
+                Соловьёвым
+            </button>
+
+            <button onclick="nextPage(11, true)">
+                панелькой
+            </button>
+
+            <button onclick="nextPage(11, true)">
+                расходником
+            </button>
+
+        </div>
+
+        <div class="navigation">
+
+            <button
+                class="nav-btn"
+                onclick="backPage('page-9')">
+                >
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="nextPage(11)">
+                <
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+        ВОПРОС 11
+    ========================== -->
+
+    <div class="page" id="page-11">
+
+        <div class="question-number">
+            11
+        </div>
+
+        <div class="question">
+            Вставьте пропущенное слово: "После 31 мая в Нагаево стало на одну ... меньше"
+        </div>
+
+        <div class="answers">
+
+            <button onclick="nextPage(12, true)">
+                собаку
+            </button>
+
+            <button onclick="nextPage(12, true)">
+                кошку
+            </button>
+
+            <button onclick="nextPage(12, true)">
+                Настю
+            </button>
+
+            <button onclick="nextPage(12, true)">
+                личность
+            </button>
+
+            <button onclick="nextPage(12, true)">
+                пару
+            </button>
+
+        </div>
+
+        <div class="navigation">
+
+            <button
+                class="nav-btn"
+                onclick="backPage('page-10')">
+                >
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="nextPage(12)">
+                <
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+        ВОПРОС 12
+    ========================== -->
+
+    <div class="page" id="page-12">
+
+        <div class="question-number">
+            12
+        </div>
+
+        <div class="question">
+            Продолжите: "Лабула..."
+        </div>
+
+        <div class="answers">
+
+            <button onclick="nextPage(13, true)">
+                Буля
+            </button>
+
+            <button onclick="nextPage(13, true)">
+                Булат
+            </button>
+
+            <button onclick="nextPage(13, true)">
+                бабуля
+            </button>
+
+            <button onclick="nextPage(13, true)">
+                пуля
+            </button>
+
+        </div>
+
+        <div class="navigation">
+
+            <button
+                class="nav-btn"
+                onclick="backPage('page-11')">
+                >
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="nextPage(13)">
+                <
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+        ВОПРОС 13
+    ========================== -->
+
+    <div class="page" id="page-13">
+
+        <div class="question-layout">
+
+            <!-- ЛЕВАЯ ЧАСТЬ -->
+
+            <div class="question-side">
+
+                <div class="question-number">
+                    13
+                </div>
+
+                <div class="question">
+                    Что произойдёт дальше на данном видео?
+                </div>
+
+                <div class="answers">
+
+                    <button onclick="nextPage(14, true)">
+                        бабушка упадёт в воду
+                    </button>
+
+                    <button onclick="nextPage(14, true)">
+                        из воды выплывёт бабушка
+                    </button>
+
+                    <button onclick="nextPage(14, true)">
+                        бабушка покажет фак
+                    </button>
+
+                    <button onclick="nextPage(14, true)">
+                        бабушка умирает
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- ПРАВАЯ ЧАСТЬ -->
+
+            <div class="image-side">
+
+                <img
+                    src="fotki/question13.png"
+                    class="side-image">
+
+            </div>
+
+        </div>
+
+        <!-- НАВИГАЦИЯ -->
+
+        <div class="navigation">
+
+            <button
+                class="nav-btn"
+                onclick="backPage('page-12')">
+                >
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="nextPage(14)">
+                <
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+        ВОПРОС 14
+    ========================== -->
+
+    <div class="page" id="page-14">
+
+        <div class="question-number">
+            14
+        </div>
+
+        <div class="question">
+            Что будет написано на могиле Андерсона?
+        </div>
+
+        <div class="answers">
+
+            <button onclick="nextPage(15, true)">
+                Б.М.В.
+            </button>
+
+            <button onclick="nextPage(15, true)">
+                R.A.V.E.
+            </button>
+
+            <button onclick="nextPage(15, true)">
+                R.A.P.
+            </button>
+
+            <button onclick="nextPage(15, true)">
+                .rar
+            </button>
+
+            <button onclick="nextPage(15, true)">
+                R.Z.T.
+            </button>
+
+        </div>
+
+        <div class="navigation">
+
+            <button
+                class="nav-btn"
+                onclick="backPage('page-13')">
+                >
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="nextPage(15)">
+                <
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+        ВОПРОС 15
+    ========================== -->
+
+    <div class="page" id="page-15">
+
+        <div class="question-number">
+            15
+        </div>
+
+        <div class="question">
+            Как можно назвать ребёнка в коляске?
+        </div>
+
+        <div class="answers">
+
+            <button onclick="nextPage(16, true)">
+                Кредит
+            </button>
+
+            <button onclick="nextPage(16, true)">
+                Спалился Поделился
+            </button>
+
+            <button onclick="nextPage(16, true)">
+                Пепельница
+            </button>
+
+            <button onclick="nextPage(16, true)">
+                Не Трахан Не Целован
+            </button>
+
+            <button onclick="nextPage(16, true)">
+                Иишка
+            </button>
+
+        </div>
+
+        <div class="navigation">
+
+            <button
+                class="nav-btn"
+                onclick="backPage('page-14')">
+                >
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="nextPage(16)">
+                <
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+        ВОПРОС 16
+    ========================== -->
+
+    <div class="page" id="page-16">
+
+        <div class="question-number">
+            16
+        </div>
+
+        <div class="question">
+            Чего не хватает топлесу для его познавательного контента?
+        </div>
+
+        <div class="answers">
+
+            <button onclick="nextPage(17, true)">
+                Лифчика
+            </button>
+
+            <button onclick="nextPage(17, true)">
+                Нейронов
+            </button>
+
+            <button onclick="nextPage(17, true)">
+                Стаса Ай Как Просто
+            </button>
+
+            <button onclick="nextPage(17, true)">
+                Донатов
+            </button>
+
+            <button onclick="nextPage(17, true)">
+                Желейного медведя
+            </button>
+
+        </div>
+
+        <div class="navigation">
+
+            <button
+                class="nav-btn"
+                onclick="backPage('page-15')">
+                >
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="nextPage(17)">
+                <
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+        ВОПРОС 17
+    ========================== -->
+
+    <div class="page" id="page-17">
+
+        <div class="question-number">
+            17
+        </div>
+
+        <div class="question">
+            Сколько всего типов нежити?
+        </div>
+
+        <div class="answers">
+
+            <button onclick="nextPage(18, true)">
+                1
+            </button>
+
+            <button onclick="nextPage(18, true)">
+                2
+            </button>
+
+            <button onclick="nextPage(18, true)">
+                3 + 1
+            </button>
+
+            <button onclick="nextPage(18, true)">
+                5
+            </button>
+
+            <button onclick="nextPage(18, true)">
+                6
+            </button>
+
+        </div>
+
+        <div class="navigation">
+
+            <button
+                class="nav-btn"
+                onclick="backPage('page-16')">
+                >
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="nextPage(18)">
+                <
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+        ВОПРОС 18
+    ========================== -->
+
+    <div class="page" id="page-18">
+
+        <div class="question-number">
+            18
+        </div>
+
+        <div class="question">
+            Объясните, откуда пошло выражение "Пау, пау дома? Нет, пау пау бургер". Развёрнутый ответ. Чем больше вы расскажите историю этого выражения, тем больше баллов вы получите за этот вопрос (до 4 баллов)
         </div>
 
         <textarea
-            placeholder="Введите текст..."
-        ></textarea>
+            class="long-answer"
+            placeholder="Введите ваш ответ...">
+        </textarea>
 
-        <button onclick="nextPage(5)">
-            Продолжить
-        </button>
+        <div class="navigation">
+
+            <button
+                class="nav-btn"
+                onclick="backPage('page-17')">
+                >
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="nextPage(19)">
+                <
+            </button>
+
+        </div>
 
     </div>
+
+    <!-- =========================
+        ВОПРОС 19
+    ========================== -->
+
+    <div class="page" id="page-19">
+
+        <div class="question-number">
+            19
+        </div>
+
+        <div class="question">
+            С новым годом
+        </div>
+
+        <div class="answers">
+
+            <button onclick="nextPage(20, true)">
+                спасибо пожалуйста
+            </button>
+
+        </div>
+
+        <div class="navigation">
+
+            <button
+                class="nav-btn"
+                onclick="backPage('page-18')">
+                >
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="nextPage(20)">
+                <
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+        ВОПРОС 20
+    ========================== -->
+
+    <div class="page" id="page-20">
+
+        <div class="question-number">
+            20
+        </div>
+
+        <div class="question">
+            Значение названия канала Андерson. Развёрнутый ответ. Чем больше вы расскажите про значение этого названия, тем больше баллов вы получите за этот вопрос (до 3 баллов)
+        </div>
+
+        <textarea
+            class="long-answer"
+            placeholder="Введите ваш ответ...">
+        </textarea>
+
+        <div class="navigation">
+
+            <button
+                class="nav-btn"
+                onclick="backPage('page-19')">
+                >
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="nextPage(21)">
+                <
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+        ВОПРОС 21
+    ========================== -->
+
+    <div class="page" id="page-21">
+
+        <div class="question-number">
+            21
+        </div>
+
+        <div class="question">
+            Что делает бабушка на самом смешном видео в мире с мопсом (мопс пытается повторить её движения)
+        </div>
+
+        <div class="answers">
+
+            <button onclick="nextPage(22, true)">
+                моет посуду
+            </button>
+
+            <button onclick="nextPage(22, true)">
+                падает
+            </button>
+
+            <button onclick="nextPage(22, true)">
+                орёт
+            </button>
+
+            <button onclick="nextPage(22, true)">
+                хлопает
+            </button>
+
+            <button onclick="nextPage(22, true)">
+                пишет реп
+            </button>
+
+        </div>
+
+        <div class="navigation">
+
+            <button
+                class="nav-btn"
+                onclick="backPage('page-20')">
+                >
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="nextPage(22)">
+                <
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+        ВОПРОС 22
+    ========================== -->
+
+    <div class="page" id="page-22">
+
+        <div class="question-number">
+            22
+        </div>
+
+        <div class="question">
+            Перечислите всех участников Autizm gang. Только его официальные участники (золотой состав)
+        </div>
+
+        <textarea
+            class="long-answer"
+            placeholder="Введите ваш ответ...">
+        </textarea>
+
+        <div class="navigation">
+
+            <button
+                class="nav-btn"
+                onclick="backPage('page-21')">
+                >
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="nextPage(23)">
+                <
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+        ВОПРОС 23
+    ========================== -->
+
+    <div class="page" id="page-23">
+
+        <div class="question-number">
+            23
+        </div>
+
+        <div class="question">
+            Продолжите "WW3 - ..."
+        </div>
+
+        <div class="answers">
+
+            <button onclick="nextPage(24, true)">
+                simulator
+            </button>
+
+            <button onclick="nextPage(24, true)">
+                worldwide
+            </button>
+
+            <button onclick="nextPage(24, true)">
+                battle royale
+            </button>
+
+            <button onclick="nextPage(24, true)">
+                world war
+            </button>
+
+        </div>
+
+        <div class="navigation">
+
+            <button
+                class="nav-btn"
+                onclick="backPage('page-22')">
+                >
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="nextPage(24)">
+                <
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+        ВОПРОС 24
+    ========================== -->
+
+    <div class="page" id="page-24">
+
+        <div class="question-number">
+            24
+        </div>
+
+        <div class="question">
+            Объясните, что такое "чернослив". Какие ещё сухофрукты имеют особое значение? Развёрнутый ответ. Чем больше вы расскажите, тем больше баллов вы получите за этот вопрос (до 4 баллов)
+        </div>
+
+        <textarea
+            class="long-answer"
+            placeholder="Введите ваш ответ...">
+        </textarea>
+
+        <div class="navigation">
+
+            <button
+                class="nav-btn"
+                onclick="backPage('page-23')">
+                >
+            </button>
+
+            <button
+                class="nav-btn"
+                onclick="openPopup()">
+
+                Завершить
+
+            </button>
+
+        </div>
+
+    </div>
+
 
     <!-- =========================
          ФИНАЛ
     ========================== -->
 
-    <div class="page" id="page-5">
+    <div class="page" id="page-finish">
 
-        <div class="title">
-            Спасибо за прохождение
-        </div>
+        <div class="final-page">
 
-        <div class="question">
-            Ваши результаты вам сообщат позже.<br><br>
+            <div class="title">
+                Спасибо за прохождение
+            </div>
 
-            Запомните имя, которое вы вводили.
+            <div class="name-text">
+                Ваши результаты вам сообщат позже.<br><br>
+                Запомните имя, которое вы вводили.
+            </div>
+
         </div>
 
     </div>
 
-</div>
-
 <script>
 
+localStorage.removeItem('anderson-test-finished');
+
 /* =========================
-   СТАРТ ТЕСТА
+   ФИНАЛ
 ========================= */
+
+function finishTest(){
+
+    showPage('page-finish');
+
+    document.querySelector('.progress-counter')
+        .style.display = 'none';
+
+}
 
 function startTest(){
 
-    const username = document.getElementById('username').value;
+    const username =
+        document.getElementById('username').value;
 
     if(username.trim() === ''){
-        alert('Введите имя');
+
+        openNamePopup();
+
+        return;
+    }
+
+    /* ПРОВЕРКА: ПРОЙДЕН ЛИ ТЕСТ */
+
+    if(localStorage.getItem('anderson-test-finished')){
+
+        openAlreadyPopup();
+
         return;
     }
 
@@ -385,11 +2627,249 @@ function startTest(){
 }
 
 /* =========================
-   ПЕРЕКЛЮЧЕНИЕ СТРАНИЦ
+   XP POPUP
 ========================= */
 
-function nextPage(pageNumber){
-    showPage('page-' + pageNumber);
+function openPopup(){
+
+    document.getElementById('xp-popup')
+        .style.display = 'flex';
+
+    document.getElementById('xp-sound')
+        .play();
+}
+
+function openAlreadyPopup(){
+
+    document.getElementById('already-popup')
+        .style.display = 'flex';
+
+    document.getElementById('xp-sound')
+        .play();
+}
+
+function closeAlreadyPopup(){
+
+    document.getElementById('already-popup')
+        .style.display = 'none';
+}
+
+function closePopup(){
+
+    document.getElementById('xp-popup')
+        .style.display = 'none';
+}
+
+function finishTestConfirmed(){
+
+    localStorage.setItem(
+        'anderson-test-finished',
+        'true'
+    );
+
+    finishTest();
+
+    closePopup();
+}
+
+function openNamePopup(){
+
+    document.getElementById('name-popup')
+        .style.display = 'flex';
+
+    document.getElementById('xp-sound')
+        .play();
+}
+
+function closeNamePopup(){
+
+    document.getElementById('name-popup')
+        .style.display = 'none';
+}
+
+function openNamePopup(){
+
+    document.getElementById('name-popup')
+        .style.display = 'flex';
+
+    document.getElementById('xp-sound')
+        .play();
+}
+
+function closeNamePopup(){
+
+    document.getElementById('name-popup')
+        .style.display = 'none';
+}
+
+/* =========================
+   ДАННЫЕ
+========================= */
+
+const totalQuestions = 24;
+
+let answeredQuestions = new Set();
+
+let skippedQuestions = new Set();
+
+/* =========================
+   СТАРТ ТЕСТА
+========================= */
+
+function startTest(){
+
+    const username =
+        document.getElementById('username').value;
+
+    if(username.trim() === ''){
+
+        openNamePopup();
+
+        return;
+    }
+
+    if(localStorage.getItem('anderson-test-finished')){
+
+        openAlreadyPopup();
+
+        return;
+    }
+
+    showPage('page-1');
+}
+
+/* =========================
+   ВПЕРЁД
+========================= */
+
+function nextPage(pageNumber, answered = false){
+
+    const currentPage =
+        document.querySelector('.page.active');
+
+    if(currentPage){
+
+        const currentMatch =
+            currentPage.id.match(/\d+/);
+
+        if(currentMatch){
+
+            const currentQuestion =
+                currentMatch[0];
+
+            if(answered){
+
+                answeredQuestions.add(currentQuestion);
+
+                skippedQuestions.delete(currentQuestion);
+            }
+            else{
+
+                if(!answeredQuestions.has(currentQuestion)){
+
+                    skippedQuestions.add(currentQuestion);
+                }
+            }
+        }
+    }
+
+    showPage(`page-${pageNumber}`);
+}
+
+/* =========================
+   НАЗАД
+========================= */
+
+function backPage(id){
+
+    showPage(id);
+}
+
+/* =========================
+   СЕРДЕЧКИ
+========================= */
+
+function spawnHearts(){
+
+    const container =
+        document.getElementById('hearts-container');
+
+    for(let i = 0; i < 4; i++){
+
+        const heart =
+            document.createElement('div');
+
+        heart.className =
+            'floating-heart';
+
+        heart.innerHTML = '❤';
+
+        heart.style.setProperty(
+            '--x',
+            Math.random()
+        );
+
+        heart.style.setProperty(
+            '--y',
+            Math.random()
+        );
+
+        heart.style.fontSize =
+            (22 + Math.random() * 18) + 'px';
+
+        container.appendChild(heart);
+
+        setTimeout(() => {
+
+            heart.remove();
+
+        }, 1800);
+    }
+}
+
+/* =========================
+   СЧЁТЧИК
+========================= */
+
+function updateCounter(){
+
+    const counter =
+        document.getElementById('answered-count');
+
+    const skippedText =
+        document.getElementById('missed-counter');
+
+    const currentPage =
+        document.querySelector('.page.active');
+
+    if(!currentPage) return;
+
+    const match =
+        currentPage.id.match(/\d+/);
+
+    if(match){
+
+        counter.textContent =
+            match[0];
+    }
+    else{
+
+        counter.textContent = '0';
+    }
+
+    if(skippedQuestions.size > 0){
+
+        skippedText.textContent =
+            `пропущено: ${skippedQuestions.size}`;
+
+        skippedText.style.opacity = '1';
+    }
+    else{
+
+        skippedText.textContent = '';
+
+        skippedText.style.opacity = '0';
+    }
 }
 
 /* =========================
@@ -398,16 +2878,290 @@ function nextPage(pageNumber){
 
 function showPage(id){
 
-    const pages = document.querySelectorAll('.page');
+    const pages =
+        document.querySelectorAll('.page');
 
     pages.forEach(page => {
+
         page.classList.remove('active');
     });
 
-    document.getElementById(id).classList.add('active');
+    document
+        .getElementById(id)
+        .classList.add('active');
+
+    updateCounter();
 }
 
+/* =========================
+   TIMER
+========================= */
+
+let totalTime =
+    100 * 60 * 60 * 1000;
+
+function updateTimer(){
+
+    const hours =
+        Math.floor(
+            totalTime / (1000 * 60 * 60)
+        );
+
+    const minutes =
+        Math.floor(
+            (totalTime % (1000 * 60 * 60))
+            / (1000 * 60)
+        );
+
+    const seconds =
+        Math.floor(
+            (totalTime % (1000 * 60))
+            / 1000
+        );
+
+    const milliseconds =
+        Math.floor(
+            totalTime % 1000
+        );
+
+    document.getElementById('hours')
+        .textContent =
+            String(hours);
+
+    document.getElementById('minutes')
+        .textContent =
+            String(minutes).padStart(2, '0');
+
+    document.getElementById('seconds')
+        .textContent =
+            String(seconds).padStart(2, '0');
+
+    document.getElementById('milliseconds')
+        .textContent =
+            String(milliseconds).padStart(3, '0');
+
+    totalTime -= 30;
+
+    if(totalTime <= 0){
+
+        clearInterval(timerInterval);
+
+        document.body.innerHTML = `
+            <div class="time-over">
+                TIME OVER
+            </div>
+        `;
+    }
+}
+
+const timerInterval =
+    setInterval(updateTimer, 30);
+
+updateCounter(0);
 </script>
+
+<div class="xp-popup" id="xp-popup">
+
+    <div class="xp-window">
+
+        <div class="xp-titlebar">
+
+            <span>Local Disk (C:)</span>
+
+            <button
+                class="xp-close"
+                onclick="closePopup()">
+                ×
+            </button>
+
+        </div>
+
+        <div class="xp-content">
+
+            <img
+                src="fotki/question24.png"
+                class="xp-icon">
+
+            <div class="xp-text">
+
+                Вы уверены, что хотите
+                завершить тест?
+
+            </div>
+
+        </div>
+
+        <div class="xp-buttons">
+
+            <button
+                class="xp-ok"
+                onclick="finishTestConfirmed()">
+
+                OK
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="xp-popup" id="already-popup">
+
+    <div class="xp-window">
+
+        <div class="xp-titlebar">
+
+            <span>Windows Error</span>
+
+            <button
+                class="xp-close"
+                onclick="closeAlreadyPopup()">
+                ×
+            </button>
+
+        </div>
+
+        <div class="xp-content">
+
+            <img
+                src="fotki/question24.png"
+                class="xp-icon">
+
+            <div class="xp-text">
+
+                Тест уже пройден.<br><br>
+                Если возникли вопросы,
+                обратитесь к организатору.
+
+            </div>
+
+        </div>
+
+        <div class="xp-buttons">
+
+            <button
+                class="xp-ok"
+                onclick="closeAlreadyPopup()">
+
+                OK
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="xp-popup" id="already-popup">
+
+    <div class="xp-window">
+
+        <div class="xp-titlebar">
+
+            <span>Windows Error</span>
+
+            <button
+                class="xp-close"
+                onclick="closeAlreadyPopup()">
+                ×
+            </button>
+
+        </div>
+
+        <div class="xp-content">
+
+            <img
+                src="fotki/question24.png"
+                class="xp-icon">
+
+            <div class="xp-text">
+
+                Тест уже пройден.<br><br>
+
+                (Enter)<br><br>
+
+                Если возникли вопросы,
+                обратитесь к организатору.
+
+            </div>
+
+        </div>
+
+        <div class="xp-buttons">
+
+            <button
+                class="xp-ok"
+                onclick="closeAlreadyPopup()">
+
+                OK
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="xp-popup" id="name-popup">
+
+    <div class="xp-window">
+
+        <div class="xp-titlebar">
+
+            <span>Windows Error</span>
+
+            <button
+                class="xp-close"
+                onclick="closeNamePopup()">
+                ×
+            </button>
+
+        </div>
+
+        <div class="xp-content">
+
+            <img
+                src="fotki/question24.png"
+                class="xp-icon">
+
+            <div class="xp-text">
+
+                Введите имя
+
+            </div>
+
+        </div>
+
+        <div class="xp-buttons">
+
+            <button
+                class="xp-ok"
+                onclick="closeNamePopup()">
+
+                OK
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<audio
+    id="xp-sound"
+    src="sounds/windows-navigation-start.mp3">
+</audio>
+
+<div class="heart-button" onclick="spawnHearts()">
+    ❤
+</div>
+
+<div id="hearts-container"></div>
 
 </body>
 </html>
