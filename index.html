@@ -1057,7 +1057,9 @@ body::after{
 
         transform:none;
 
-        text-align:left;
+        text-align:center;
+
+        width:100%;
     }
 
     /* NAVIGATION */
@@ -1193,15 +1195,23 @@ body::after{
 
     .xp-close{
 
-        min-width:unset !important;
+        width:20px !important;
+        height:20px !important;
+
+        min-width:20px !important;
+        min-height:20px !important;
 
         padding:0 !important;
+
+        font-size:11px;
 
         line-height:1;
 
         display:flex;
         align-items:center;
         justify-content:center;
+
+        aspect-ratio:1/1;
     }
 
 }
