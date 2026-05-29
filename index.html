@@ -1280,6 +1280,30 @@ body::after{
 
 }
 
+/* КНОПКА "ОТВЕТИТЬ" */
+
+.nav-btn.answer-ready{
+
+    color:#8dff8d;
+
+    opacity:1;
+
+    transition:
+        color 0.25s,
+        opacity 0.25s,
+        transform 0.2s;
+}
+
+.nav-btn.answer-ready:hover{
+
+    color:#b8ffb8;
+
+    transform:scale(1.2);
+
+    text-shadow:
+        0 0 10px rgba(120,255,120,0.6);
+}
+
 </style>
 </head>
 <body>
@@ -2597,7 +2621,7 @@ body::after{
 
             <button
                 class="nav-btn"
-                onclick="openPopup()">
+                onclick="saveLastAnswer(); openPopup();">
 
                 Завершить
 
@@ -2632,6 +2656,26 @@ body::after{
 <script>
 
 /* =========================
+   ПРОВЕРКА БРАУЗЕРА
+========================= */
+
+const ua = navigator.userAgent.toLowerCase();
+
+const badBrowser =
+    ua.includes('telegram') ||
+    ua.includes('instagram') ||
+    ua.includes('tiktok') ||
+    ua.includes('vk');
+
+if(badBrowser){
+
+    alert(
+        'Зайдите с другого браузера\n\n' +
+        'Во встроенных браузерах ответы могут не сохраниться'
+    );
+}
+
+/* =========================
    ФИНАЛ
 ========================= */
 
@@ -2643,6 +2687,115 @@ function finishTest(){
         .style.display = 'none';
 
 }
+
+/* =========================
+   СОХРАНЕНИЕ ПОСЛЕДНЕГО ОТВЕТА
+========================= */
+
+function saveLastAnswer(){
+
+    const currentPage =
+        document.querySelector('.page.active');
+
+    if(!currentPage) return;
+
+    const textarea =
+        currentPage.querySelector('textarea');
+
+    if(!textarea) return;
+
+    const currentMatch =
+        currentPage.id.match(/\d+/);
+
+    if(!currentMatch) return;
+
+    const currentQuestion =
+        Number(currentMatch[0]);
+
+    const text =
+        textarea.value.trim();
+
+    answers[currentQuestion - 1] =
+        text;
+
+    if(text.length > 0){
+
+        answeredQuestions.add(currentQuestion);
+
+        skippedQuestions.delete(currentQuestion);
+    }
+
+    else{
+
+        answeredQuestions.delete(currentQuestion);
+
+        skippedQuestions.add(currentQuestion);
+    }
+}
+
+/* =========================
+   КНОПКА "ОТВЕТИТЬ"
+========================= */
+
+function setupTextareaButtons(){
+
+    const textareas =
+        document.querySelectorAll('.long-answer');
+
+    textareas.forEach(textarea => {
+
+        const page =
+            textarea.closest('.page');
+
+        const nextBtn =
+            page.querySelector(
+                '.navigation .nav-btn:last-child'
+            );
+
+        if(!nextBtn) return;
+
+        /* ПРОВЕРКА ТЕКСТА */
+
+        function updateButton(){
+
+            const text =
+                textarea.value.trim();
+
+            if(text.length > 0){
+
+                nextBtn.innerText = 'ответить';
+
+                nextBtn.classList.add(
+                    'answer-ready'
+                );
+            }
+
+            else{
+
+                nextBtn.innerText = '<';
+
+                nextBtn.classList.remove(
+                    'answer-ready'
+                );
+            }
+        }
+
+        /* ВВОД */
+
+        textarea.addEventListener(
+            'input',
+            updateButton
+        );
+
+        /* ПРИ ОТКРЫТИИ СТРАНИЦЫ */
+
+        updateButton();
+    });
+}
+
+/* ЗАПУСК */
+
+setupTextareaButtons();
 
 /* =========================
    XP POPUP
@@ -2691,16 +2844,34 @@ function finishTestConfirmed(){
 
         method:'POST',
 
-        body: JSON.stringify({
+        headers:{
+            'Content-Type':'application/json'
+        },
+
+        body:JSON.stringify({
             username,
             answers
         })
 
+    })
+    .then(res => res.json())
+
+    .then(data => {
+
+        finishTest();
+
+        closePopup();
+    })
+
+    .catch(err => {
+
+        alert(
+            'Ошибка отправки результатов.\n\n' +
+            'Попробуйте открыть сайт в Chrome или Safari.'
+        );
+
+        console.error(err);
     });
-
-    finishTest();
-
-    closePopup();
 }
 
 function openNamePopup(){
@@ -2971,6 +3142,10 @@ function showPage(id){
         .classList.add('active');
 
     updateCounter();
+
+    /* ОБНОВЛЕНИЕ КНОПОК TEXTAREA */ 
+
+    setupTextareaButtons();
 }
 
 /* =========================
