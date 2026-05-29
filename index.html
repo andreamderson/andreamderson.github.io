@@ -2848,37 +2848,39 @@ function finishTestConfirmed(){
         'anderson-test-finished',
         'true'
     );
+
     const username =
         document.getElementById('username').value;
 
+    fetch(
+        'https://script.google.com/macros/s/AKfycbzxHo_--WO-lUjJ8z_HhDx_z0kZkrntIWNcO_cic9uid7L05jmJO0Pb17sDmEcbc8K_zA/exec',
+        {
 
-   fetch(
-       'https://script.google.com/macros/s/AKfycbzxHo_--WO-lUjJ8z_HhDx_z0kZkrntIWNcO_cic9uid7L05jmJO0Pb17sDmEcbc8K_zA/exec',
-       {
-   
-           method:'POST',
-   
-           body:JSON.stringify({
-               username,
-               answers
-           })
-   
-       }
-   )
-   
-   .then(() => {
-   
-       finishTest();
-   
-       closePopup();
-   })
-   
-   .catch(err => {
-   
-       openSendErrorPopup();
-   
-       console.error(err);
-   });
+            method:'POST',
+
+            body:JSON.stringify({
+                username,
+                answers
+            })
+
+        }
+    )
+
+    .then(() => {
+
+        finishTest();
+
+        closePopup();
+    })
+
+    .catch(err => {
+
+        openSendErrorPopup();
+
+        console.error(err);
+    });
+
+}
 
 function openNamePopup(){
 
@@ -2946,11 +2948,10 @@ function startTest(){
 
     if(badBrowser){
 
-        alert(
-            'Зайдите с другого браузера.\n\n' +
-            'Во встроенном браузере Telegram/VK/Instagram ответы могут не сохраниться.'
-        );
-    }
+    openBrowserPopup();
+
+    return;
+}
 
     /* =========================
        ПРОВЕРКА ПРОХОЖДЕНИЯ
