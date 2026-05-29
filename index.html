@@ -2656,26 +2656,6 @@ body::after{
 <script>
 
 /* =========================
-   ПРОВЕРКА БРАУЗЕРА
-========================= */
-
-const ua = navigator.userAgent.toLowerCase();
-
-const badBrowser =
-    ua.includes('telegram') ||
-    ua.includes('instagram') ||
-    ua.includes('tiktok') ||
-    ua.includes('vk');
-
-if(badBrowser){
-
-    alert(
-        'Зайдите с другого браузера\n\n' +
-        'Во встроенных браузерах ответы могут не сохраниться'
-    );
-}
-
-/* =========================
    ФИНАЛ
 ========================= */
 
@@ -2782,10 +2762,7 @@ function setupTextareaButtons(){
 
         /* ВВОД */
 
-        textarea.addEventListener(
-            'input',
-            updateButton
-        );
+        textarea.oninput = updateButton;
 
         /* ПРИ ОТКРЫТИИ СТРАНИЦЫ */
 
@@ -2924,6 +2901,32 @@ function startTest(){
 
         return;
     }
+
+    /* =========================
+       ПРОВЕРКА БРАУЗЕРА
+    ========================= */
+
+    const ua =
+        navigator.userAgent.toLowerCase();
+
+    const badBrowser =
+
+        ua.includes('telegram') ||
+        ua.includes('instagram') ||
+        ua.includes('tiktok') ||
+        ua.includes('vk');
+
+    if(badBrowser){
+
+        alert(
+            'Зайдите с другого браузера.\n\n' +
+            'Во встроенном браузере Telegram/VK/Instagram ответы могут не сохраниться.'
+        );
+    }
+
+    /* =========================
+       ПРОВЕРКА ПРОХОЖДЕНИЯ
+    ========================= */
 
     if(localStorage.getItem('anderson-test-finished')){
 
