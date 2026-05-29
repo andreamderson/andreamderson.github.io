@@ -2714,6 +2714,40 @@ function saveLastAnswer(){
 }
 
 /* =========================
+    БРАУЗЕР ПОПАП
+========================= */
+
+function openBrowserPopup(){
+
+    document.getElementById('browser-popup')
+        .style.display = 'flex';
+
+    document.getElementById('xp-sound')
+        .play();
+}
+
+function closeBrowserPopup(){
+
+    document.getElementById('browser-popup')
+        .style.display = 'none';
+}
+
+function openSendErrorPopup(){
+
+    document.getElementById('send-error-popup')
+        .style.display = 'flex';
+
+    document.getElementById('xp-sound')
+        .play();
+}
+
+function closeSendErrorPopup(){
+
+    document.getElementById('send-error-popup')
+        .style.display = 'none';
+}
+
+/* =========================
    КНОПКА "ОТВЕТИТЬ"
 ========================= */
 
@@ -2842,10 +2876,7 @@ function finishTestConfirmed(){
 
     .catch(err => {
 
-        alert(
-            'Ошибка отправки результатов.\n\n' +
-            'Попробуйте открыть сайт в Chrome или Safari.'
-        );
+        openSendErrorPopup();
 
         console.error(err);
     });
@@ -3265,6 +3296,55 @@ updateCounter(0);
 
 </div>
 
+<div class="xp-popup" id="send-error-popup">
+
+    <div class="xp-window">
+
+        <div class="xp-titlebar">
+
+            <span>Windows Error</span>
+
+            <button
+                class="xp-close"
+                onclick="closeSendErrorPopup()">
+                ×
+            </button>
+
+        </div>
+
+        <div class="xp-content">
+
+            <img
+                src="fotki/question24.png"
+                class="xp-icon">
+
+            <div class="xp-text">
+
+                Ошибка отправки результатов.<br><br>
+
+                Попробуйте открыть сайт
+                в Chrome или Safari.
+
+            </div>
+
+        </div>
+
+        <div class="xp-buttons">
+
+            <button
+                class="xp-ok"
+                onclick="closeSendErrorPopup()">
+
+                OK
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
 <div class="xp-popup" id="already-popup">
 
     <div class="xp-window">
@@ -3302,6 +3382,55 @@ updateCounter(0);
             <button
                 class="xp-ok"
                 onclick="closeAlreadyPopup()">
+
+                OK
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="xp-popup" id="browser-popup">
+
+    <div class="xp-window">
+
+        <div class="xp-titlebar">
+
+            <span>Windows Warning</span>
+
+            <button
+                class="xp-close"
+                onclick="closeBrowserPopup()">
+                ×
+            </button>
+
+        </div>
+
+        <div class="xp-content">
+
+            <img
+                src="fotki/question24.png"
+                class="xp-icon">
+
+            <div class="xp-text">
+
+                Зайдите с другого браузера.<br><br>
+
+                Во встроенных браузерах 
+                ответы могут не сохраниться.
+
+            </div>
+
+        </div>
+
+        <div class="xp-buttons">
+
+            <button
+                class="xp-ok"
+                onclick="closeBrowserPopup()">
 
                 OK
 
