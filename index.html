@@ -2942,10 +2942,9 @@ function startTest(){
 
     const badBrowser =
 
-        ua.includes('telegram') ||
-        ua.includes('instagram') ||
-        ua.includes('tiktok') ||
-        ua.includes('vk');
+       ua.includes('telegram') &&
+   
+       !ua.includes('chrome');
 
     if(badBrowser){
 
