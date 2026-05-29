@@ -455,6 +455,11 @@ button:hover{
    GIF ФОН
 ========================= */
 
+html,
+body{
+    overflow-x:hidden;
+}
+
 body::before{
 
     content:"";
@@ -473,11 +478,6 @@ body::before{
     background-position:center;
 
     filter:blur(8px);
-
-    html,
-    body{
-        overflow-x:hidden;
-    }
 
     transform:scale(1.05);
 
